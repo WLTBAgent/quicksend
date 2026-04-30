@@ -6,6 +6,7 @@ import (
 	"io"
 	"log"
 	"net/http"
+	"strings"
 
 	"github.com/wltbagent/quicksend/storage"
 )
@@ -30,7 +31,7 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		h.upload(w, r, key)
 	case r.Method == http.MethodGet && r.URL.Path == "/list":
 		h.list(w, r, key)
-	case r.Method == http.MethodGet && r.URL.Path == "/download":
+	case r.Method == http.MethodGet && strings.HasPrefix(r.URL.Path, "/download/"):
 		h.download(w, r, key)
 	default:
 		http.Error(w, "not found", http.StatusNotFound)
@@ -68,9 +69,9 @@ func (h *Handler) list(w http.ResponseWriter, r *http.Request, key string) {
 }
 
 func (h *Handler) download(w http.ResponseWriter, r *http.Request, key string) {
-	filename := r.URL.Query().Get("file")
+	filename := strings.TrimPrefix(r.URL.Path, "/download/")
 	if filename == "" {
-		http.Error(w, "missing file query parameter", http.StatusBadRequest)
+		http.Error(w, "missing file name", http.StatusBadRequest)
 		return
 	}
 

@@ -10,7 +10,7 @@ All endpoints require an `X-Key` header with a 32-character pre-shared key.
 |--------|----------|-------------|
 | `POST` | `/upload` | Upload a file (multipart form, field name `file`) |
 | `GET` | `/list` | List available files for the key (JSON) |
-| `GET` | `/download?file=<name>` | Download a file (removed after download) |
+| `GET` | `/download/<name>` | Download a file (removed after download) |
 
 ### Examples
 
@@ -24,7 +24,7 @@ curl -X POST -H "X-Key: $KEY" -F "file=@document.pdf" https://quicksend.example.
 curl -H "X-Key: $KEY" https://quicksend.example.com/list
 
 # Download
-curl -H "X-Key: $KEY" -O https://quicksend.example.com/download?file=document.pdf
+curl -H "X-Key: $KEY" -O https://quicksend.example.com/download/document.pdf
 ```
 
 ## Deployment
