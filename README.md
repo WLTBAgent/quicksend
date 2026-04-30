@@ -29,29 +29,7 @@ curl -H "X-Key: $KEY" -O https://quicksend.example.com/download?file=document.pd
 
 ## Deployment
 
-Quicksend is designed to run behind [Caddy](https://caddyserver.com/) for automatic TLS. Docker Compose is the recommended deployment method.
-
-### Configuration
-
-| Variable | Default | Description |
-|----------|---------|-------------|
-| `QUICKSEND_ADDR` | `:8080` | Listen address |
-| `QUICKSEND_DATA_DIR` | `/data` | Storage directory |
-| `QUICKSEND_DOMAIN` | `localhost` | Your public domain (for Caddy/TLS) |
-| `QUICKSEND_EMAIL` | *(empty)* | Email for TLS certificate (Caddy) |
-
-### Quick Start
-
-```bash
-git clone https://github.com/wltbagent/quicksend.git
-cd quicksend
-
-# Set your domain and email for TLS
-export QUICKSEND_DOMAIN=quicksend.example.com
-export QUICKSEND_EMAIL=you@example.com
-
-docker compose up -d
-```
+Quicksend is designed to run behind a TLS proxy such as Caddyserver or nginx.
 
 ## How It Works
 
