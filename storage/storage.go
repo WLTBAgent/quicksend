@@ -128,15 +128,16 @@ func (s *Storage) removeUnlocked(key, filename string) error {
 	filePath := filepath.Join(keyDir, filename)
 	os.Remove(filePath)
 
-	metas := s.files[key]
-	for i, m := range metas {
-		if m.Name == filename {
-			s.files[key] = append(metas[:i], metas[i+1:]...)
-			break
+	var remaining []FileMeta
+	for _, m := range s.files[key] {
+		if m.Name != filename {
+			remaining = append(remaining, m)
 		}
 	}
-	if len(s.files[key]) == 0 {
+	if len(remaining) == 0 {
 		delete(s.files, key)
+	} else {
+		s.files[key] = remaining
 	}
 	return s.saveMeta()
 }
