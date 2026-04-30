@@ -1,0 +1,6 @@
+{
+  "{$DOMAIN}:443" {
+    tls {$EMAIL}
+    reverse_proxy quicksend:8080
+  }
+}
