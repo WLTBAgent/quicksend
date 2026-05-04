@@ -27,6 +27,38 @@ curl -H "X-Key: $KEY" https://quicksend.example.com/list
 curl -H "X-Key: $KEY" -O https://quicksend.example.com/download/document.pdf
 ```
 
+## CLI Client
+
+Quicksend includes a CLI client (`qs`) for managing peers and transferring files. Build it with:
+
+```bash
+go build -o qs ./cmd/qs
+```
+
+### Usage
+
+```bash
+# Add a peer (nickname, URL, 32-char key)
+qs add-key alice https://quicksend.example.com abcdefghijklmnopqrstuvwxyz123456
+
+# List configured peers
+qs peers
+
+# List files from a peer (numbered output)
+qs list alice
+
+# Download a file by index
+qs download alice 1
+
+# Upload a file
+qs upload alice document.pdf
+
+# Remove a peer
+qs rm-key alice
+```
+
+Config is stored at `$XDG_CONFIG_HOME/quicksend/config.json` (defaults to `~/.config/quicksend/config.json`).
+
 ## Deployment
 
 Quicksend is designed to run behind a TLS proxy such as Caddyserver or nginx.
